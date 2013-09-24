@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
+  <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
+  <primitive>false</primitive>  
+  <delegateAnalysisEngineSpecifiers>
+    <delegateAnalysisEngine key="TestElementAnnotatorDescriptor">
+      <import location="TestElementAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TokenAnnotatorDescriptor">
+      <import location="TokenAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TokenUniGramAnnotatorDescriptor">
+      <import location="TokenUniGramAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TokenBiGramAnnotatorDescriptor">
+      <import location="TokenBiGramAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TokenTriGramAnnotatorDescriptor">
+      <import location="TokenTriGramAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="GoldAnswerScorerDescriptor">
+      <import location="GoldAnswerScorerDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TokenOverlapAnswerScorerDescriptor">
+      <import location="TokenOverlapAnswerScorerDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="NGramOverlapAnswerScorerDescriptor">
+      <import location="NGramOverlapAnswerScorerDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="EvaluatorDescriptor">
+      <import location="EvaluatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+  </delegateAnalysisEngineSpecifiers>
+  <analysisEngineMetaData>
+    <name>hw2-pqichen-aae</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+    <configurationParameters/>
+    <configurationParameterSettings/>
+    <flowConstraints>
+      <fixedFlow>
+        <node>TestElementAnnotatorDescriptor</node>
+        <node>TokenAnnotatorDescriptor</node>
+        <node>TokenUniGramAnnotatorDescriptor</node>
+        <node>TokenBiGramAnnotatorDescriptor</node>
+        <node>TokenTriGramAnnotatorDescriptor</node>
+        <node>GoldAnswerScorerDescriptor</node>
+        <node>TokenOverlapAnswerScorerDescriptor</node>
+        <node>NGramOverlapAnswerScorerDescriptor</node>
+        <node>EvaluatorDescriptor</node>
+      </fixedFlow>
+    </flowConstraints>
+    <typePriorities/>
+    <fsIndexCollection/>
+    <capabilities>
+      <capability>
+        <inputs>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Token</type>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Question</type>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.NGram</type>
+          <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.AnswerScore</type>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Answer</type>
+          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Annotation</type>
+        </inputs>
+        <outputs/>
+        <languagesSupported/>
+      </capability>
+    </capabilities>
+  <operationalProperties>
+      <modifiesCas>true</modifiesCas>
+      <multipleDeploymentAllowed>true</multipleDeploymentAllowed>
+      <outputsNewCASes>false</outputsNewCASes>
+    </operationalProperties>
+  </analysisEngineMetaData>
+  <resourceManagerConfiguration/>
+</analysisEngineDescription>
