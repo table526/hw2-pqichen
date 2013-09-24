@@ -57,15 +57,15 @@
     <capabilities>
       <capability>
         <inputs>
+          <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
+        </inputs>
+        <outputs>
           <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Token</type>
           <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Question</type>
           <type allAnnotatorFeatures="true">edu.cmu.deiis.types.NGram</type>
-          <type allAnnotatorFeatures="true">uima.tcas.DocumentAnnotation</type>
           <type allAnnotatorFeatures="true">edu.cmu.deiis.types.AnswerScore</type>
           <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Answer</type>
-          <type allAnnotatorFeatures="true">edu.cmu.deiis.types.Annotation</type>
-        </inputs>
-        <outputs/>
+        </outputs>
         <languagesSupported/>
       </capability>
     </capabilities>
