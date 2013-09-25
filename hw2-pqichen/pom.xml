@@ -76,7 +76,7 @@
 		</dependency>
 	</dependencies>
 	<scm>
-		<connection>scm:git:git://github.com/table526/hw2-pqichen.git</connection>
-		<developerConnection>scm:git:git://github.com/table526/hw2-pqichen.git</developerConnection>
+		<connection>scm:git:git@github.com/table526/hw2-pqichen.git</connection>
+		<developerConnection>scm:git:git@github.com/table526/hw2-pqichen.git</developerConnection>
 	</scm>
 </project>
