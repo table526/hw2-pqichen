@@ -124,32 +124,11 @@ public class Evaluator extends JCasAnnotator_ImplBase {
     }
     double precision_NGramOverlap = (double)pred_true / (double)Correct_Num;
     
-    // print out results.
-    File outputf = new File("/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/inputData/processedData/Output.txt.xmi"); 
-    FileWriter fw = null;
-    try {
-      fw = new FileWriter("/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/inputData/processedData/Output.txt.xmi");
-      //fw = new FileWriter(mOutputDir);
-    } catch (IOException e1) {
-      // TODO Auto-generated catch block
-      e1.printStackTrace();
-    }
-    
+ // print out results.
     double precision_Gold = 1.00;
-    try {
-      fw.write("Gold_AnswerScore_Precision:\t" + precision_Gold + "\n" 
-              + "TokenOverlap_AnswerScore_Precision:\t" + precision_TokenOverlap + "\n"
-              + "NGramOverlap_AnswerScore_Precision:\t" + precision_NGramOverlap + "\n");
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
-    try {
-      fw.close();
-    } catch (IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    System.out.println("Gold_AnswerScore_Precision:\t" + precision_Gold + "\n" 
+            + "TokenOverlap_AnswerScore_Precision:\t" + precision_TokenOverlap + "\n"
+            + "NGramOverlap_AnswerScore_Precision:\t" + precision_NGramOverlap + "\n");
   }
   
 
