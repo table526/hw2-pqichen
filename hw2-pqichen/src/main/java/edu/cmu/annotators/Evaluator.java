@@ -27,77 +27,103 @@ import org.apache.uima.jcas.JCas;
 
 import edu.cmu.deiis.types.Answer;
 import edu.cmu.deiis.types.AnswerScore;
+import edu.cmu.deiis.types.NGram;
 
 public class Evaluator extends JCasAnnotator_ImplBase {  
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
     // TODO Auto-generated method stub
     
-    // Initialize Gold_AS.
-    AnswerScore [] Gold_AS;
+    // Initialize AS.
+    AnswerScore [] AS;
     int num = 0;
-    FSIndex Gold_AS_Index = aJCas.getAnnotationIndex(AnswerScore.type);
-    Iterator Gold_AS_Iter = Gold_AS_Index.iterator();   
-    while (Gold_AS_Iter.hasNext()) 
+    FSIndex AS_Index = aJCas.getAnnotationIndex(AnswerScore.type);
+    Iterator AS_Iter = AS_Index.iterator();   
+    while (AS_Iter.hasNext()) 
     {
-      Gold_AS_Iter.next();
+      AS_Iter.next();
       num++;
     }
-    Gold_AS = new AnswerScore[num];
-    Gold_AS_Iter = Gold_AS_Index.iterator(); 
+    AS = new AnswerScore[num];
+    AS_Iter = AS_Index.iterator(); 
     int pos = 0;
-    while (Gold_AS_Iter.hasNext()) 
+    while (AS_Iter.hasNext()) 
     {
-      Gold_AS[pos] = (AnswerScore)Gold_AS_Iter.next();
+      AS[pos] = (AnswerScore)AS_Iter.next();
       pos++;
+    }
+    int Gold_AS_num = 0, Token_AS_num = 0, NGram_AS_num = 0;
+    for(int i = 0; i < AS.length; i++)
+    {
+      if(AS[i].getCasProcessorId() == "GoldAnswerScorer")
+      {
+        Gold_AS_num++;
+      }else if(AS[i].getCasProcessorId() == "TokenOverlapAnswerScorer") 
+      {
+        Token_AS_num++;
+      }else if(AS[i].getCasProcessorId() == "NGramOverlapAnswerScorer")
+      {
+        NGram_AS_num++;
+      }
+    }
+   
+    // Initialize each NGram.
+    AnswerScore [] Gold_AS = new AnswerScore[Gold_AS_num];
+    AnswerScore [] Token_AS = new AnswerScore[Token_AS_num];
+    AnswerScore [] NGram_AS = new AnswerScore[NGram_AS_num];
+    Gold_AS_num = 0; Token_AS_num = 0; NGram_AS_num = 0;
+    for(int i = 0; i < AS.length; i++)
+    {
+      if(AS[i].getCasProcessorId() == "GoldAnswerScorer")
+      {
+        Gold_AS[Gold_AS_num] = AS[i];
+        Gold_AS_num++;
+      }else if(AS[i].getCasProcessorId() == "TokenOverlapAnswerScorer") 
+      {
+        Token_AS[Token_AS_num] = AS[i];
+        Token_AS_num++;
+      }else if(AS[i].getCasProcessorId() == "NGramOverlapAnswerScorer")
+      {
+        NGram_AS[NGram_AS_num] = AS[i];
+        NGram_AS_num++;
+      }
     }
     
-    // Initialize Token_AS.
-    AnswerScore [] Token_AS;
-    Token_AS = new AnswerScore[num];
-    FSIndex Token_AS_Index = aJCas.getAnnotationIndex(AnswerScore.type);
-    Iterator Token_AS_Iter = Token_AS_Index.iterator();   
-    pos = 0;
-    while (Token_AS_Iter.hasNext()) 
-    {
-      Token_AS[pos] = (AnswerScore)Token_AS_Iter.next();
-      pos++;
-    }
-    
-    // Initialize NGram_AS.
-    AnswerScore [] NGram_AS;
-    NGram_AS = new AnswerScore[num];
-    FSIndex NGram_AS_Index = aJCas.getAnnotationIndex(AnswerScore.type);
-    Iterator NGram_AS_Iter = NGram_AS_Index.iterator();   
-    pos = 0;
-    while (NGram_AS_Iter.hasNext()) 
-    {
-      NGram_AS[pos] = (AnswerScore)NGram_AS_Iter.next();
-      pos++;
-    }
-
     // Get correct Answer Num.
     int Correct_Num = 0;
+    int bg, ed;
     for(int i = 0; i < Gold_AS.length; i++)
     {
       if(Gold_AS[i].getAnswer().getIsCorrect() == true)
+      {
         Correct_Num++;
+      }
     }
     
     // Calculate Precision of TokenOverlap Method.
     double tmp = 0.0;
-    double Threshold = 2.0;
     boolean judge = true;
     int pred_true = 0;
+    boolean [] sign_tk = new boolean[Token_AS.length];
+    int sign = -1;
+    for(int k = 0; k < sign_tk.length; k++)
+    {
+      sign_tk[k] = false;
+    }
     for(int i = 0; i < Correct_Num; i++)
     {
+      judge = false;
+      sign = -1;
       for(int j = 0; j < Token_AS.length; j++)
       {
-        if(tmp <= Token_AS[i].getScore() && Token_AS[i].getScore() < Threshold)
-          tmp = Token_AS[i].getScore();
-          judge = Token_AS[i].getAnswer().getIsCorrect();
+        if(tmp <= Token_AS[j].getScore() && sign_tk[j] == false)
+        {
+          tmp = Token_AS[j].getScore();
+          judge = Token_AS[j].getAnswer().getIsCorrect();
+          sign = j;
+        }
       }
-      Threshold = tmp;
+      sign_tk[sign] = true;
       if(judge == true)
         pred_true++;
       tmp = 0.0;
@@ -106,18 +132,27 @@ public class Evaluator extends JCasAnnotator_ImplBase {
     
     // Calculate Precision of NGramOverlap Method.
     tmp = 0.0;
-    Threshold = 2.0;
     judge = true;
     pred_true = 0;
+    boolean [] sign_ng = new boolean[NGram_AS.length];
+    for(int k = 0; k < sign_ng.length; k++)
+    {
+      sign_ng[k] = false;
+    }
     for(int i = 0; i < Correct_Num; i++)
     {
+      sign = -1;
+      judge = false;
       for(int j = 0; j < NGram_AS.length; j++)
       {
-        if(tmp <= NGram_AS[i].getScore() && NGram_AS[i].getScore() < Threshold)
-          tmp = NGram_AS[i].getScore();
-          judge = NGram_AS[i].getAnswer().getIsCorrect();
+        if(tmp <= NGram_AS[j].getScore() && sign_ng[j] == false)
+        {
+          tmp = NGram_AS[j].getScore();
+          judge = NGram_AS[j].getAnswer().getIsCorrect();
+          sign = j;
+        }
       }
-      Threshold = tmp;
+      sign_ng[sign] = true;
       if(judge == true)
         pred_true++;
       tmp = 0.0;

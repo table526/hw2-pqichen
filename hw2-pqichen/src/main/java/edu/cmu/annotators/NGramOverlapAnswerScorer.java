@@ -79,8 +79,6 @@ public class NGramOverlapAnswerScorer extends JCasAnnotator_ImplBase {
     int Uni_NG_num = 0, Bi_NG_num = 0, Tri_NG_num = 0;
     for(int i = 0; i < NG_List.length; i++)
     {
-      int bg = NG_List[i].getBegin();
-      int ed = NG_List[i].getEnd();
       switch (NG_List[i].getElements().size())
       {
         case 1: Uni_NG_num++; break;
@@ -89,7 +87,8 @@ public class NGramOverlapAnswerScorer extends JCasAnnotator_ImplBase {
         default: break;
       }
     }
-    // Initialize Uni_Gram.
+   
+    // Initialize each NGram.
     NGram [] Uni_NG_List;
     Uni_NG_List = new NGram[Uni_NG_num];
     NGram [] Bi_NG_List;
