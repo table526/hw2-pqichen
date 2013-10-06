@@ -4,32 +4,32 @@
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
   <primitive>false</primitive>  
   <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="TestElementAnnotatorDescriptor">
-      <import location="TestElementAnnotatorDescriptor.xml"/>
-    </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TokenAnnotatorDescriptor">
-      <import location="TokenAnnotatorDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TokenAnnotatorDescriptor.xml"/>
+    </delegateAnalysisEngine>
+    <delegateAnalysisEngine key="TestElementAnnotatorDescriptor">
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TestElementAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TokenUniGramAnnotatorDescriptor">
-      <import location="TokenUniGramAnnotatorDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TokenUniGramAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TokenBiGramAnnotatorDescriptor">
-      <import location="TokenBiGramAnnotatorDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TokenBiGramAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TokenTriGramAnnotatorDescriptor">
-      <import location="TokenTriGramAnnotatorDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TokenTriGramAnnotatorDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="GoldAnswerScorerDescriptor">
-      <import location="GoldAnswerScorerDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/GoldAnswerScorerDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="TokenOverlapAnswerScorerDescriptor">
-      <import location="TokenOverlapAnswerScorerDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/TokenOverlapAnswerScorerDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="NGramOverlapAnswerScorerDescriptor">
-      <import location="NGramOverlapAnswerScorerDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/NGramOverlapAnswerScorerDescriptor.xml"/>
     </delegateAnalysisEngine>
     <delegateAnalysisEngine key="EvaluatorDescriptor">
-      <import location="EvaluatorDescriptor.xml"/>
+      <import location="/home/pan/git/hw2-pqichen/hw2-pqichen/src/main/resources/EvaluatorDescriptor.xml"/>
     </delegateAnalysisEngine>
   </delegateAnalysisEngineSpecifiers>
   <analysisEngineMetaData>
@@ -37,7 +37,7 @@
     <description/>
     <version>1.0</version>
     <vendor/>
-    <configurationParameters/>
+    <configurationParameters searchStrategy="language_fallback"/>
     <configurationParameterSettings/>
     <flowConstraints>
       <fixedFlow>

@@ -58,63 +58,54 @@ public class NGramOverlapAnswerScorer extends JCasAnnotator_ImplBase {
       pos++;
     }
     
+    // Initialize NGram
+    NGram [] NG_List;
+    int num = 0;
+    FSIndex NGram_Index = aJCas.getAnnotationIndex(NGram.type);
+    Iterator NGram_Iter = NGram_Index.iterator();   
+    while (NGram_Iter.hasNext()) 
+    {
+      NGram_Iter.next();
+      num++;
+    }
+    NG_List = new NGram[num];
+    NGram_Iter = NGram_Index.iterator();   
+    pos = 0;
+    while (NGram_Iter.hasNext()) 
+    {
+      NG_List[pos] = (NGram)NGram_Iter.next();
+      pos++;
+    }
+    int Uni_NG_num = 0, Bi_NG_num = 0, Tri_NG_num = 0;
+    for(int i = 0; i < NG_List.length; i++)
+    {
+      int bg = NG_List[i].getBegin();
+      int ed = NG_List[i].getEnd();
+      switch (NG_List[i].getElements().size())
+      {
+        case 1: Uni_NG_num++; break;
+        case 2: Bi_NG_num++; break;
+        case 3: Tri_NG_num++; break;
+        default: break;
+      }
+    }
     // Initialize Uni_Gram.
     NGram [] Uni_NG_List;
-    int num = 0;
-    FSIndex Uni_Gram_Index = aJCas.getAnnotationIndex(NGram.type);
-    Iterator Uni_Gram_Iter = Uni_Gram_Index.iterator();   
-    while (Uni_Gram_Iter.hasNext()) 
-    {
-      Uni_Gram_Iter.next();
-      num++;
-    }
-    Uni_NG_List = new NGram[num];
-    Uni_Gram_Iter = Uni_Gram_Index.iterator();   
-    pos = 0;
-    while (Uni_Gram_Iter.hasNext()) 
-    {
-      Uni_NG_List[pos] = (NGram)Uni_Gram_Iter.next();
-      pos++;
-    }
-    
-    // Initialize Bi_Gram.
+    Uni_NG_List = new NGram[Uni_NG_num];
     NGram [] Bi_NG_List;
-    num = 0;
-    FSIndex Bi_Gram_Index = aJCas.getAnnotationIndex(NGram.type);
-    Iterator Bi_Gram_Iter = Bi_Gram_Index.iterator();   
-    while (Bi_Gram_Iter.hasNext()) 
-    {
-      Bi_Gram_Iter.next();
-      num++;
-    }
-    Bi_NG_List = new NGram[num];
-    Bi_Gram_Iter = Bi_Gram_Index.iterator();   
-    pos = 0;
-    while (Bi_Gram_Iter.hasNext()) 
-    {
-      Bi_NG_List[pos] = (NGram)Bi_Gram_Iter.next();
-      pos++;
-    }
-    
-    // Initialize Tri_Gram.
+    Bi_NG_List = new NGram[Bi_NG_num];
     NGram [] Tri_NG_List;
-    num = 0;
-    FSIndex Tri_Gram_Index = aJCas.getAnnotationIndex(NGram.type);
-    Iterator Tri_Gram_Iter = Tri_Gram_Index.iterator();   
-    while (Tri_Gram_Iter.hasNext()) 
+    Tri_NG_List = new NGram[Tri_NG_num];
+    Uni_NG_num = 0; Bi_NG_num = 0; Tri_NG_num = 0;
+    for(int i = 0; i < NG_List.length; i++)
     {
-      Tri_Gram_Iter.next();
-      num++;
+      switch (NG_List[i].getElements().size())
+      {
+        case 1: Uni_NG_List[Uni_NG_num] = NG_List[i]; Uni_NG_num++; break;
+        case 2: Bi_NG_List[Bi_NG_num] = NG_List[i]; Bi_NG_num++; break;
+        case 3: Tri_NG_List[Tri_NG_num] = NG_List[i]; Tri_NG_num++; break;
+      }
     }
-    Tri_NG_List = new NGram[num];
-    Tri_Gram_Iter = Tri_Gram_Index.iterator();   
-    pos = 0;
-    while (Tri_Gram_Iter.hasNext()) 
-    {
-      Tri_NG_List[pos] = (NGram)Tri_Gram_Iter.next();
-      pos++;
-    }
-    
     // Get text content.
     String Text_Content = aJCas.getDocumentText();
     
