@@ -55,13 +55,13 @@ public class Evaluator extends JCasAnnotator_ImplBase {
     int Gold_AS_num = 0, Token_AS_num = 0, NGram_AS_num = 0;
     for(int i = 0; i < AS.length; i++)
     {
-      if(AS[i].getCasProcessorId() == "GoldAnswerScorer")
+      if(AS[i].getCasProcessorId().equals("GoldAnswerScorer"))
       {
         Gold_AS_num++;
-      }else if(AS[i].getCasProcessorId() == "TokenOverlapAnswerScorer") 
+      }else if(AS[i].getCasProcessorId().equals("TokenOverlapAnswerScorer")) 
       {
         Token_AS_num++;
-      }else if(AS[i].getCasProcessorId() == "NGramOverlapAnswerScorer")
+      }else if(AS[i].getCasProcessorId().equals("NGramOverlapAnswerScorer"))
       {
         NGram_AS_num++;
       }
@@ -74,15 +74,15 @@ public class Evaluator extends JCasAnnotator_ImplBase {
     Gold_AS_num = 0; Token_AS_num = 0; NGram_AS_num = 0;
     for(int i = 0; i < AS.length; i++)
     {
-      if(AS[i].getCasProcessorId() == "GoldAnswerScorer")
+      if(AS[i].getCasProcessorId().equals("GoldAnswerScorer"))
       {
         Gold_AS[Gold_AS_num] = AS[i];
         Gold_AS_num++;
-      }else if(AS[i].getCasProcessorId() == "TokenOverlapAnswerScorer") 
+      }else if(AS[i].getCasProcessorId().equals("TokenOverlapAnswerScorer")) 
       {
         Token_AS[Token_AS_num] = AS[i];
         Token_AS_num++;
-      }else if(AS[i].getCasProcessorId() == "NGramOverlapAnswerScorer")
+      }else if(AS[i].getCasProcessorId().equals("NGramOverlapAnswerScorer"))
       {
         NGram_AS[NGram_AS_num] = AS[i];
         NGram_AS_num++;
